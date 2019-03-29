@@ -34,10 +34,11 @@ echo $GIT_BRANCH
 ls -la
 
 echo "Getting ./cc-test-reporter"
-curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+curl -sL https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
 chmod +x ./cc-test-reporter
 
-./cc-test-reporter before-build 
+# echo "./cc-test-reporter before-build"
+#./cc-test-reporter before-build
 
 echo "Running go test with coverage"
 go test -coverprofile=c.out
@@ -45,5 +46,12 @@ go test -coverprofile=c.out
 echo "Tests completed"
 echo "mode: set" > c.out
 
-echo "Running ./cc-test-reporter after-build"
-./cc-test-reporter after-build
+ls -la
+
+
+./cc-test-reporter format-coverage
+./cc-test-reporter upload-coverage
+
+
+# echo "Running ./cc-test-reporter after-build"
+# ./cc-test-reporter after-build
