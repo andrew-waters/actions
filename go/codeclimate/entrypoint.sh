@@ -12,17 +12,21 @@ if [[ -z "$GITHUB_REPOSITORY" ]]; then
   exit 1
 fi
 
+echo $GITHUB_REPOSITORY
+
 root_path="/go/src/github.com/$GITHUB_REPOSITORY"
 
 echo "Setting up"
-mkdir -p $root_path
-cp -ar $GITHUB_WORKSPACE/ $root_path/
+cp -r $GITHUB_WORKSPACE $root_path
 cd $root_path
 
 GIT_COMMIT_SHA=$GITHUB_SHA
 echo $GIT_COMMIT_SHA
 GIT_BRANCH=$GITHUB_REF
 echo $GIT_BRANCH
+
+
+ls -la
 
 echo "Getting ./cc-test-reporter"
 curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
