@@ -12,9 +12,6 @@ if [[ -z "$GITHUB_REPOSITORY" ]]; then
   exit 1
 fi
 
-echo "CC_TEST_REPORTER_ID:"
-echo $CC_TEST_REPORTER_ID
-
 echo "GITHUB_REPOSITORY:"
 echo $GITHUB_REPOSITORY
 
@@ -22,8 +19,10 @@ root_path="/go/src/github.com/$GITHUB_REPOSITORY"
 
 echo $root_path
 
+mkdir $root_path
+
 echo "cp -r $GITHUB_WORKSPACE $root_path"
-cp -r $GITHUB_WORKSPACE $root_path
+cp -r $GITHUB_WORKSPACE/. $root_path
 cd $root_path
 
 GIT_COMMIT_SHA=$GITHUB_SHA
