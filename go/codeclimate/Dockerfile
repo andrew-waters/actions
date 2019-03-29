@@ -16,7 +16,9 @@ RUN \
   rm -rf /var/lib/apt && \
   go get -u github.com/jteeuwen/go-bindata/... && \
   go get -u github.com/stretchr/testify/assert && \
-  go get github.com/axw/gocov/gocov
+  go get github.com/axw/gocov/gocov && \
+  curl https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > /usr/local/bin/cc-test-reporter && \
+  chmod +x /usr/local/bin/cc-test-reporter
 
 COPY entrypoint.sh /entrypoint.sh
 
