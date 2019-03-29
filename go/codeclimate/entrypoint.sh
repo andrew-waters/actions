@@ -19,5 +19,14 @@ mkdir -p $root_path
 cp -a $GITHUB_WORKSPACE/* $root_path/
 cd $root_path
 
-echo "Running go test"
-CGO_ENABLED=0 GOOS=linux go test ./...
+curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+chmod +x ./cc-test-reporter
+
+./cc-test-reporter before-build 
+
+echo "Running go test with coverage"
+go test -coverprofile=c.out
+
+echo "mode: set" > c.out
+
+./cc-test-reporter after-build
