@@ -31,8 +31,6 @@ GIT_BRANCH=$GITHUB_REF
 echo $GIT_BRANCH
 
 
-ls -la
-
 # echo "cc-test-reporter before-build"
 #cc-test-reporter before-build
 
