@@ -19,7 +19,7 @@ root_path="/go/src/github.com/$GITHUB_REPOSITORY"
 
 echo $root_path
 
-mkdir $root_path
+mkdir -p $root_path
 
 echo "cp -r $GITHUB_WORKSPACE $root_path"
 cp -r $GITHUB_WORKSPACE/. $root_path
