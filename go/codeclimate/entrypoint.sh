@@ -12,28 +12,13 @@ if [[ -z "$GITHUB_REPOSITORY" ]]; then
   exit 1
 fi
 
-echo "GITHUB_REPOSITORY:"
-echo $GITHUB_REPOSITORY
-
-root_path="/go/src/github.com/$GITHUB_REPOSITORY"
-
-echo $root_path
-
-mkdir -p $root_path
-
-echo "cp -r $GITHUB_WORKSPACE $root_path"
-cp -r $GITHUB_WORKSPACE/. $root_path
-cd $root_path
+ROOT_PATH="/go/src/github.com/$GITHUB_REPOSITORY"
+mkdir -p $ROOT_PATH
+cp -r $GITHUB_WORKSPACE/. $ROOT_PATH
+cd $ROOT_PATH
 
 GIT_COMMIT_SHA=$GITHUB_SHA
-echo $GIT_COMMIT_SHA
 GIT_BRANCH=$GITHUB_REF
-echo $GIT_BRANCH
-
-
-# echo "cc-test-reporter before-build"
-#cc-test-reporter before-build
-echo "Running before build"
 
 cc-test-reporter before-build
 
@@ -46,22 +31,3 @@ grep -h -v "^mode:" ./*.cover >> c.out
 rm -f *.cover
 
 cc-test-reporter after-build
-
-ls -la
-
-cat c.out
-
-# cc-test-reporter format-coverage -t gocov
-
-# ls -la
-
-# cd coverage
-
-# ls -la
-
-
-# cc-test-reporter upload-coverage
-
-
-# echo "Running ./cc-test-reporter after-build"
-# ./cc-test-reporter after-build

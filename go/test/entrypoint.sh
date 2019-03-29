@@ -12,12 +12,12 @@ if [[ -z "$GITHUB_REPOSITORY" ]]; then
   exit 1
 fi
 
-root_path="/go/src/github.com/$GITHUB_REPOSITORY"
+ROOT_PATH="/go/src/github.com/$GITHUB_REPOSITORY"
 
 echo "Setting up"
-mkdir -p $root_path
-cp -a $GITHUB_WORKSPACE/* $root_path/
-cd $root_path
+mkdir -p $ROOT_PATH
+cp -a $GITHUB_WORKSPACE/* $ROOT_PATH/
+cd $ROOT_PATH
 
 echo "Running go test"
 CGO_ENABLED=0 GOOS=linux go test ./...
