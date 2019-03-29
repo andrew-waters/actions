@@ -16,7 +16,7 @@ root_path="/go/src/github.com/$GITHUB_REPOSITORY"
 
 echo "Setting up"
 mkdir -p $root_path
-cp -a $GITHUB_WORKSPACE/* $root_path/
+cp -ar $GITHUB_WORKSPACE/* $root_path/
 cd $root_path
 
 curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
