@@ -16,9 +16,15 @@ root_path="/go/src/github.com/$GITHUB_REPOSITORY"
 
 echo "Setting up"
 mkdir -p $root_path
-cp -ar $GITHUB_WORKSPACE/* $root_path/
+cp -ar $GITHUB_WORKSPACE $root_path
 cd $root_path
 
+GIT_COMMIT_SHA=$GITHUB_SHA
+echo $GIT_COMMIT_SHA
+GIT_BRANCH=$GITHUB_REF
+echo $GIT_BRANCH
+
+echo "Getting ./cc-test-reporter"
 curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
 chmod +x ./cc-test-reporter
 
@@ -27,6 +33,8 @@ chmod +x ./cc-test-reporter
 echo "Running go test with coverage"
 go test -coverprofile=c.out
 
+echo "Tests completed"
 echo "mode: set" > c.out
 
+echo "Running ./cc-test-reporter after-build"
 ./cc-test-reporter after-build
