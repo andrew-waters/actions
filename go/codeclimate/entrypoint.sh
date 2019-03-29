@@ -45,7 +45,7 @@ echo "mode: set" > c.out
 grep -h -v "^mode:" ./*.cover >> c.out
 rm -f *.cover
 
-./cc-test-reporter after-build
+cc-test-reporter after-build
 
 ls -la
 
