@@ -15,10 +15,13 @@ fi
 cd $GITHUB_WORKSPACE
 
 if [ -f go.mod ]; then
+  echo "go.mod exists, continuing"
   if [ -d "vendor" ] ; then
     echo "vendor dir exists, skipping"
   else
     echo "vendor dir not present - running 'go mod vendor'"
     go mod vendor
   fi
+else
+  echo "go.mod does not exist, nothing to do"
 fi
