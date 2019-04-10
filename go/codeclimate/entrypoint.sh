@@ -22,7 +22,7 @@ GIT_BRANCH=$GITHUB_REF
 
 cc-test-reporter before-build
 
-echo "Running go test with coverage"
+echo "[ACTION INFO] Running go test with coverage"
 for pkg in $(go list ./... | grep -v main); do
     go test -coverprofile=$(echo $pkg | tr / -).cover $pkg
 done
