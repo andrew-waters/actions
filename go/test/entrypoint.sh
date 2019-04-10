@@ -19,5 +19,12 @@ mkdir -p $ROOT_PATH
 cp -a $GITHUB_WORKSPACE/* $ROOT_PATH/
 cd $ROOT_PATH
 
+if [ -f go.mod ]; then
+  if [ ! -d "vendor" ] ; then
+    echo "Running go mod download"
+    go mod download
+  fi
+fi
+
 echo "Running go test"
 CGO_ENABLED=0 GOOS=linux go test ./...
