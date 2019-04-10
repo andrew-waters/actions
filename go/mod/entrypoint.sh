@@ -12,12 +12,13 @@ if [[ -z "$GITHUB_REPOSITORY" ]]; then
   exit 1
 fi
 
-ROOT_PATH="/go/src/github.com/$GITHUB_REPOSITORY"
+cd $GITHUB_WORKSPACE
 
-echo "Setting up"
-mkdir -p $ROOT_PATH
-cp -a $GITHUB_WORKSPACE/* $ROOT_PATH/
-cd $ROOT_PATH
-
-echo "Running go test"
-CGO_ENABLED=0 GOOS=linux go test ./...
+if [ -f go.mod ]; then
+  if [ -d "vendor" ] ; then
+    echo "vendor dir exists, skipping"
+  else
+    echo "vendor dir not present - running `go mod download`"
+    go mod download
+  fi
+fi
