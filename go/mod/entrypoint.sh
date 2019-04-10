@@ -18,7 +18,7 @@ if [ -f go.mod ]; then
   if [ -d "vendor" ] ; then
     echo "vendor dir exists, skipping"
   else
-    echo "vendor dir not present - running `go mod download`"
-    go mod download
+    echo "vendor dir not present - running 'go mod vendor'"
+    go mod vendor
   fi
 fi
