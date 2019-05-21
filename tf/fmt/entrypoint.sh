@@ -22,9 +22,11 @@ for file in $UNFMT_FILES; do
 FILE_DIFF=$(terraform fmt -write=false -diff=true "$file" | sed -n '/@@.*/,//{/@@.*/d;p}')
 FMT_OUTPUT="$FMT_OUTPUT
 <details><summary><code>$file</code></summary>
+
 \`\`\`diff
 $FILE_DIFF
 \`\`\`
+
 </details>
 "
 done
