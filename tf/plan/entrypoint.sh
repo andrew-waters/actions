@@ -24,8 +24,6 @@ set -e
 
 cd "${TF_ACTION_WORKING_DIR:-.}"
 
-export TF_CLI_CONFIG_FILE = $GITHUB_WORKSPACE/.terraformrc
-
 if [[ ! -z "$TF_ACTION_TFE_TOKEN" ]]; then
   cat > ~/.terraformrc << EOF
 credentials "${TF_ACTION_TFE_HOSTNAME:-app.terraform.io}" {
