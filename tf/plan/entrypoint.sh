@@ -114,6 +114,8 @@ if [ $COMMENTS_URL ]; then
 
 else
 
+  echo "Cannot comment"
+
 fi
 
 echo 9
