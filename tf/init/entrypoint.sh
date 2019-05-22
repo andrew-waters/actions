@@ -10,6 +10,8 @@ credentials "${TF_ACTION_TFE_HOSTNAME:-app.terraform.io}" {
 EOF
 fi
 
+cat $GITHUB_WORKSPACE/.terraformrc
+
 set +e
 export TF_APPEND_USER_AGENT="terraform-github-actions/1.0"
 OUTPUT=$(sh -c "terraform init -no-color -input=false $*" 2>&1)
