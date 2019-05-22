@@ -29,6 +29,8 @@ set -e
 
 cd "${TF_ACTION_WORKING_DIR:-.}"
 
+echo 1
+
 if [[ ! -z "$TF_ACTION_TFE_TOKEN" ]]; then
   cat > ~/.terraformrc << EOF
 credentials "${TF_ACTION_TFE_HOSTNAME:-app.terraform.io}" {
@@ -37,9 +39,13 @@ credentials "${TF_ACTION_TFE_HOSTNAME:-app.terraform.io}" {
 EOF
 fi
 
+echo 2
+
 if [[ ! -z "$TF_ACTION_WORKSPACE" ]] && [[ "$TF_ACTION_WORKSPACE" != "default" ]]; then
   terraform workspace select "$TF_ACTION_WORKSPACE"
 fi
+
+echo 3
 
 set +e
 OUTPUT=$(sh -c "TF_IN_AUTOMATION=true terraform plan -no-color -input=false $*" 2>&1)
@@ -47,9 +53,14 @@ SUCCESS=$?
 echo "$OUTPUT"
 set -e
 
+echo 4
+echo $TF_ACTION_COMMENT
+
 if [ "$TF_ACTION_COMMENT" = "1" ] || [ "$TF_ACTION_COMMENT" = "false" ]; then
     exit $SUCCESS
 fi
+
+echo 5
 
 # Build the comment we'll post to the PR.
 COMMENT=""
