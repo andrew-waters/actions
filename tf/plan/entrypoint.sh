@@ -65,12 +65,18 @@ echo 5
 # Build the comment we'll post to the PR.
 COMMENT=""
 if [ $SUCCESS -ne 0 ]; then
+    echo 6
+
     OUTPUT=$(wrap "$OUTPUT")
     COMMENT="#### \`terraform plan\` Failed
 $OUTPUT
 
 *Workflow: \`$GITHUB_WORKFLOW\`, Action: \`$GITHUB_ACTION\`*"
 else
+
+    echo 7
+
+
     # Remove "Refreshing state..." lines by only keeping output after the
     # delimiter (72 dashes) that represents the end of the refresh stage.
     # We do this to keep the comment output smaller.
@@ -91,9 +97,13 @@ $OUTPUT
 *Workflow: \`$GITHUB_WORKFLOW\`, Action: \`$GITHUB_ACTION\`*"
 fi
 
+echo 8
+
 # Post the comment.
 PAYLOAD=$(echo '{}' | jq --arg body "$COMMENT" '.body = $body')
 COMMENTS_URL=$(cat /github/workflow/event.json | jq -r .pull_request.comments_url)
 curl -s -S -H "Authorization: token $GITHUB_TOKEN" --header "Content-Type: application/json" --data "$PAYLOAD" "$COMMENTS_URL" > /dev/null
+
+echo 9
 
 exit $SUCCESS
