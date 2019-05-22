@@ -10,7 +10,7 @@ credentials "${TF_ACTION_TFE_HOSTNAME:-app.terraform.io}" {
 EOF
 fi
 
-cat $GITHUB_WORKSPACE/.terraformrc
+export TF_CLI_CONFIG_FILE = $GITHUB_WORKSPACE/.terraformrc
 
 set +e
 export TF_APPEND_USER_AGENT="terraform-github-actions/1.0"

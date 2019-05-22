@@ -10,6 +10,4 @@ cp /.terraformrc $GITHUB_WORKSPACE
 
 sed -i "s/TF_TOKEN/$TF_VAR_STATE_TOKEN/g" $GITHUB_WORKSPACE/.terraformrc
 
-cat $GITHUB_WORKSPACE/.terraformrc
-
 exit 0
