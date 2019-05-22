@@ -5,6 +5,8 @@ cd "${TF_ACTION_WORKING_DIR:-.}"
 
 merged=$(jq --raw-output .pull_request.merged "$GITHUB_EVENT_PATH")
 
+cat "$GITHUB_EVENT_PATH"
+
 if [ "$merged" == "true" ]; then
 
     set +e
