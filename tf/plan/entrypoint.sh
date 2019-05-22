@@ -6,9 +6,11 @@ wrap() {
   if [[ $(echo "$1" | wc -l) -gt ${TF_ACTION_WRAP_LINES:-20} ]]; then
     echo "
 <details><summary>Show Output</summary>
+
 \`\`\`diff
 $1
 \`\`\`
+
 </details>
 "
 else
@@ -16,6 +18,7 @@ else
 \`\`\`diff
 $1
 \`\`\`
+
 "
 fi
 }
