@@ -35,6 +35,9 @@ COMMENT="#### \`terraform fmt\` Failed
 $FMT_OUTPUT
 *Workflow: \`$GITHUB_WORKFLOW\`, Action: \`$GITHUB_ACTION\`*
 "
+
+echo $COMMENT
+
 PAYLOAD=$(echo '{}' | jq --arg body "$COMMENT" '.body = $body')
 COMMENTS_URL=$(cat /github/workflow/event.json | jq -r .pull_request.comments_url)
 curl -s -S -H "Authorization: token $GITHUB_TOKEN" --header "Content-Type: application/json" --data "$PAYLOAD" "$COMMENTS_URL" > /dev/null
