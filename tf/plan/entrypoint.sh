@@ -90,6 +90,8 @@ echo $PAYLOAD
 COMMENTS_URL=$(cat /github/workflow/event.json | jq -r .pull_request.comments_url)
 
 echo $(cat /github/workflow/event.json)
+echo "URL:"
+echo $(cat /github/workflow/event.json | jq -r .pull_request.comments_url)
 
 
 if [ [! -z "$COMMENTS_URL"] && [[ "$COMMENTS_URL" != "null" ] ]; then
