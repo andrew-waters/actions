@@ -29,8 +29,6 @@ set -e
 
 cd "${TF_ACTION_WORKING_DIR:-.}"
 
-echo 1
-
 if [[ ! -z "$TF_ACTION_TFE_TOKEN" ]]; then
   cat > ~/.terraformrc << EOF
 credentials "${TF_ACTION_TFE_HOSTNAME:-app.terraform.io}" {
@@ -39,13 +37,9 @@ credentials "${TF_ACTION_TFE_HOSTNAME:-app.terraform.io}" {
 EOF
 fi
 
-echo 2
-
 if [[ ! -z "$TF_ACTION_WORKSPACE" ]] && [[ "$TF_ACTION_WORKSPACE" != "default" ]]; then
   terraform workspace select "$TF_ACTION_WORKSPACE"
 fi
-
-echo 3
 
 set +e
 OUTPUT=$(sh -c "TF_IN_AUTOMATION=true terraform plan -no-color -input=false $*" 2>&1)
@@ -53,19 +47,13 @@ SUCCESS=$?
 echo "$OUTPUT"
 set -e
 
-echo 4
-echo $TF_ACTION_COMMENT
-
 if [ "$TF_ACTION_COMMENT" = "1" ] || [ "$TF_ACTION_COMMENT" = "false" ]; then
     exit $SUCCESS
 fi
 
-echo 5
-
 # Build the comment we'll post to the PR.
 COMMENT=""
 if [ $SUCCESS -ne 0 ]; then
-    echo 6
 
     OUTPUT=$(wrap "$OUTPUT")
     COMMENT="#### \`terraform plan\` Failed
@@ -74,10 +62,7 @@ $OUTPUT
 *Workflow: \`$GITHUB_WORKFLOW\`, Action: \`$GITHUB_ACTION\`*"
 else
 
-    echo 7
-
-
-    # Remove "Refreshing state..." lines by only keeping output after the
+     # Remove "Refreshing state..." lines by only keeping output after the
     # delimiter (72 dashes) that represents the end of the refresh stage.
     # We do this to keep the comment output smaller.
     if echo "$OUTPUT" | egrep '^-{72}$'; then
@@ -97,15 +82,15 @@ $OUTPUT
 *Workflow: \`$GITHUB_WORKFLOW\`, Action: \`$GITHUB_ACTION\`*"
 fi
 
-echo 8
-echo $COMMENT
-
 cat /github/workflow/event.json
 
 # Post the comment.
 PAYLOAD=$(echo '{}' | jq --arg body "$COMMENT" '.body = $body')
 echo $PAYLOAD
 COMMENTS_URL=$(cat /github/workflow/event.json | jq -r .pull_request.comments_url)
+
+echo $(cat /github/workflow/event.json)
+
 
 if [ [! -z "$COMMENTS_URL"] && [[ "$COMMENTS_URL" != "null" ] ]; then
 
@@ -117,7 +102,5 @@ else
   echo "Cannot comment"
 
 fi
-
-echo 9
 
 exit $SUCCESS
