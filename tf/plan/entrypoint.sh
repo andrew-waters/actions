@@ -82,27 +82,9 @@ $OUTPUT
 *Workflow: \`$GITHUB_WORKFLOW\`, Action: \`$GITHUB_ACTION\`*"
 fi
 
-cat /github/workflow/event.json
-
 # Post the comment.
 PAYLOAD=$(echo '{}' | jq --arg body "$COMMENT" '.body = $body')
-echo $PAYLOAD
 COMMENTS_URL=$(cat /github/workflow/event.json | jq -r .pull_request.comments_url)
-
-echo $(cat /github/workflow/event.json)
-echo "URL:"
-echo $(cat /github/workflow/event.json | jq -r .pull_request.comments_url)
-
-
-if [ [! -z "$COMMENTS_URL"] && [[ "$COMMENTS_URL" != "null" ] ]; then
-
-  echo $COMMENTS_URL
-  curl -s -S -H "Authorization: token $GITHUB_TOKEN" --header "Content-Type: application/json" --data "$PAYLOAD" "$COMMENTS_URL" > /dev/null
-
-else
-
-  echo "Cannot comment"
-
-fi
+curl -s -S -H "Authorization: token $GITHUB_TOKEN" --header "Content-Type: application/json" --data "$PAYLOAD" "$COMMENTS_URL" > /dev/null
 
 exit $SUCCESS
